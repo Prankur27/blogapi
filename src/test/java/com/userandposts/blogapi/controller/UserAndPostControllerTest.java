@@ -1,11 +1,8 @@
 package com.userandposts.blogapi.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.lenient;
 
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -13,20 +10,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.userandposts.blogapi.exception.BlogException;
 import com.userandposts.blogapi.model.Comment;
 import com.userandposts.blogapi.model.Post;
-import com.userandposts.blogapi.model.PostList;
 import com.userandposts.blogapi.model.UserDetails;
-import com.userandposts.blogapi.model.UserList;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserAndPostControllerTest {
@@ -59,7 +49,7 @@ public class UserAndPostControllerTest {
 		Mockito.when(restTemplateMock.getForObject(POST_URL, Post[].class)).thenReturn(posts);
 		
 		List<UserDetails> responseList = userPostController.getUserAndPosts();
-		assertEquals(123, responseList.get(0).getPost().get(0).getUserId());
+		assertEquals(Integer.valueOf(123), responseList.get(0).getPost().get(0).getUserId());
 
 		
 	}
@@ -115,7 +105,7 @@ public class UserAndPostControllerTest {
 		Mockito.when(restTemplateMock.getForObject(COMMENT_URL+10, Comment[].class)).thenReturn(comments);
 		
 		List<Comment> commentResponse = userPostController.getComments("10");
-		assertEquals(1234, commentResponse.get(0).getId());
+		assertEquals(Integer.valueOf(1234), commentResponse.get(0).getId());
 		assertEquals("This is comment", commentResponse.get(0).getBody());
 		
 	}
